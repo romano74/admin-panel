@@ -1,0 +1,56 @@
+/* GENERAL - GLOBAL  */
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
+/*  SECTIONS (show/hide) */
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+/* TABLES */
+.table thead th {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fc;
+    cursor: pointer;
+}
+
+/*  FORMS  */
+.form-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    margin-bottom: 25px;
+}
+
+/* BUTTONS */
+.btn-action {
+    padding: 3px 10px;
+    font-size: 12px;
+    margin-right: 3px;
+}
+
+/*  TOPBAR TITLE  */
+#topbar-title {
+    font-size: 1rem;
+    margin-left: 10px;
+}
+
+/*  DASHBOARD CARDS  */
+.stat-card {
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+}
