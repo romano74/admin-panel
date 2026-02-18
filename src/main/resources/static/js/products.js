@@ -44,7 +44,7 @@ function loadProducts() {
                             <label>Price</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">$</span>
+                                    <span class="input-group-text">€</span>
                                 </div>
                                 <input type="number" step="0.01" min="0"
                                     class="form-control" id="product-price"
@@ -187,7 +187,7 @@ function renderProductsTable(products) {
             <tr>
                 <td>${product.id}</td>
                 <td><strong>${product.name}</strong></td>
-                <td>$${parseFloat(product.price).toFixed(2)}</td>
+                <td>€${parseFloat(product.price).toFixed(2)}</td>
                 <td>${stockBadge}</td>
                 <td>${product.description || '-'}</td>
                 <td>${userBadge}</td>
