@@ -47,7 +47,7 @@ function loadDashboard() {
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                         Total Products
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="total-products">
                                         0
                                     </div>
                                 </div>
@@ -124,6 +124,12 @@ function loadDashboard() {
 
         // Inject HTML into dashboard section
         $('#dashboard-content').html(html);
+
+
+        // Fetch products count
+        $.get('/api/products?page=0&size=1', function(data) {
+            $('#total-products').text(data.totalItems || 0);
+        });
 
         // Load recent users table
         loadRecentUsers();
