@@ -126,14 +126,20 @@ function loadDashboard() {
         $('#dashboard-content').html(html);
 
 
-        // Fetch products count
-        $.get('/api/products?page=0&size=1', function(data) {
-            $('#total-products').text(data.totalItems || 0);
-        });
 
         // Load recent users table
         loadRecentUsers();
+        loadRecentProducts();
     });
+}
+
+
+function loadRecentProducts() {
+    // Fetch products count
+    $.get('/api/products?page=0&size=1', function(data) {
+        $('#total-products').text(data.totalItems || 0);
+    });
+
 }
 
 // LOAD RECENT USERS TABLE
