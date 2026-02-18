@@ -1,15 +1,14 @@
 # Admin Panel - Spring Boot Learning Project
 
-A full-stack admin panel built with Spring Boot, Hibernate, and MySQL. Features complete CRUD operations for users and products with a modern Bootstrap interface.
+A full-stack admin panel built with Spring Boot, Hibernate, and MySQL/PostgreSQL. Features complete CRUD operations for users and products with a modern Bootstrap interface.
 
 ## Purpose
 
 This is a learning project created to understand:
 - Spring Boot framework
 - Hibernate ORM
-- REST API development
-- MySQL database integration
-- Bootstrap frontend design
+- REST API development (JAVA)
+- MySQL database integration (JAVA)
 
 ## Features
 
@@ -28,7 +27,8 @@ This is a learning project created to understand:
 - Spring Boot 3.x
 - Spring Data JPA
 - Hibernate
-- MySQL
+- MySQL (development)
+- Postgre (production)
 - Maven
 
 **Frontend:**
