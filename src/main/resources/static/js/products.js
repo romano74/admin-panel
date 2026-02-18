@@ -58,12 +58,12 @@ function loadProducts() {
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-6">
                             <label>Description</label>
                             <textarea class="form-control" id="product-description"
-                                rows="2" placeholder="Enter product description"></textarea>
+                                rows="4" placeholder="Enter product description"></textarea>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label>Assign to User</label>
                             <select class="form-control" id="product-user">
                                 ${userOptions}
