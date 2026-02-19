@@ -141,7 +141,7 @@ DELETE /api/products/{id}      # Delete product
 GET    /api/products/export/csv # Export to CSV
 ```
 
-## 🗄️ Database Schema
+## Database Schema
 
 ### Users Table
 ```sql
@@ -202,12 +202,6 @@ This project was built as part of learning Java enterprise development, coming f
 **Roman**
 - GitHub: [@romano74](https://github.com/romano74)
 
-## Acknowledgments
-
-- Spring Boot documentation
-- SB Admin 2 Bootstrap theme by Start Bootstrap
-- Claude AI for guidance and teaching
-
 ---
 
-**Learning Project - Spring Boot & Hibernate** 
+**Example Project - Spring Boot & Hibernate** 
