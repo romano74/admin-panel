@@ -1,49 +1,39 @@
-# Admin Panel - Spring Boot Learning Project
+# Admin Panel
 
-A full-stack admin panel built with Spring Boot, Hibernate, and MySQL/PostgreSQL. Features complete CRUD operations for users and products with a modern Bootstrap interface.
-
-## Purpose
-
-This is a learning project created to understand:
-- Spring Boot framework
-- Hibernate ORM
-- REST API development (JAVA)
-- MySQL database integration (JAVA)
+A full-stack admin panel built with Spring Boot and PostgreSQL, featuring complete CRUD operations,
+real-time search, pagination, and CSV export. Deployed on Railway.
 
 ## Features
 
-- **User Management** - Full CRUD with search, pagination, sorting
-- **Product Management** - Complete product lifecycle management
-- **User-Product Relationships** - One-to-Many database relationships
-- **CSV Export** - Export data to CSV files
-- **Responsive UI** - SB Admin 2 Bootstrap theme
-- **Search & Filter** - Real-time search with debouncing
-- **Pagination** - Server-side pagination for large datasets
+- **User Management** — Create, read, update, delete users with search, pagination and sorting
+- **Product Management** — Full product lifecycle with optional user assignment
+- **User-Product Relationships** — One-to-Many relational data modeling
+- **CSV Export** — Export users and products to CSV
+- **Dashboard** — Live counts and recent activity overview
+- **Responsive UI** — SB Admin 2 Bootstrap theme
+- **REST API** — Clean JSON endpoints for all resources
 
 ## Tech Stack
 
 **Backend:**
-- Java 17
-- Spring Boot 3.x
-- Spring Data JPA
-- Hibernate
-- MySQL (development)
-- Postgre (production)
+- Java 25
+- Spring Boot 4.x
+- Spring Data JPA / Hibernate
+- PostgreSQL
 - Maven
 
 **Frontend:**
-- HTML/CSS/JavaScript
+- HTML / CSS / JavaScript
 - jQuery
 - Bootstrap 4 (SB Admin 2)
 
-## 📋 Prerequisites
+## Prerequisites
 
-- Java 17 (Temurin/OpenJDK)
-- MySQL 8.0+
-- IntelliJ IDEA (recommended)
+- Java 25
+- PostgreSQL
 - Maven 3.6+
 
-## 🚀 Quick Start
+## Quick Start
 
 1. **Clone the repository**
 ```bash
@@ -51,21 +41,23 @@ git clone https://github.com/romano74/admin-panel.git
 cd admin-panel
 ```
 
-2. **Create database**
+2. **Create local database**
 ```sql
 CREATE DATABASE demo_db;
 ```
 
-3. **Configure database in `application.properties`**
+3. **Configure local properties**
+
+Create `src/main/resources/application-local.properties`:
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/demo_db
-spring.datasource.username=root
-spring.datasource.password=your_password
+spring.datasource.url=jdbc:postgresql://localhost:5432/demo_db
+spring.datasource.username=postgres
+spring.datasource.password=yourpassword
 ```
 
-4. **Run the application**
+4. **Run with local profile**
 ```bash
-mvn spring-boot:run
+mvn spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
 5. **Open in browser**
@@ -73,7 +65,19 @@ mvn spring-boot:run
 http://localhost:8080
 ```
 
-## 📁 Project Structure
+## Deployment
+
+Deployed on **Railway** using PostgreSQL plugin. The app reads database
+connection from Railway environment variables automatically:
+```properties
+spring.datasource.url=${DATABASE_URL}
+spring.datasource.username=${DATABASE_USERNAME}
+spring.datasource.password=${DATABASE_PASSWORD}
+```
+
+No manual configuration required on Railway — push to `main` and it deploys automatically.
+
+## Project Structure
 ```
 src/main/java/com/example/demo/
 ├── User.java                    # User entity
@@ -86,7 +90,7 @@ src/main/java/com/example/demo/
 
 src/main/resources/
 ├── static/
-│   ├── css/                     # Stylesheets
+│   ├── css/
 │   ├── js/
 │   │   ├── app.js              # Navigation logic
 │   │   ├── dashboard.js        # Dashboard widgets
@@ -94,59 +98,38 @@ src/main/resources/
 │   │   └── products.js         # Product management
 │   ├── vendor/                 # Bootstrap & jQuery
 │   └── index.html              # SPA entry point
-└── application.properties
+├── application.properties       # Railway / production config
+└── application-local.properties # Local config (not committed)
 ```
 
-## 🎨 Features Breakdown
-
-### User Management
-- Create, read, update, delete users
-- Search users by name or email
-- Pagination (10 users per page)
-- Sorting by any column
-- Export to CSV
-- Fields: name, email, phone, address, birth date
-
-### Product Management
-- Full CRUD for products
-- Assign products to users (optional relationship)
-- Search products by name or description
-- Fields: name, price, stock, description, assigned user
-
-### Dashboard
-- Total users count
-- Total products count
-- Recent users list
-- Quick navigation
-
-## 🔌 API Endpoints
+## API Endpoints
 
 ### Users
 ```
-GET    /api/users              # List users (paginated, searchable)
-GET    /api/users/{id}         # Get user by ID
-POST   /api/users              # Create user
-PUT    /api/users/{id}         # Update user
-DELETE /api/users/{id}         # Delete user
-GET    /api/users/export/csv   # Export to CSV
+GET    /api/users               # List users (paginated, searchable)
+GET    /api/users/{id}          # Get user by ID
+POST   /api/users               # Create user
+PUT    /api/users/{id}          # Update user
+DELETE /api/users/{id}          # Delete user
+GET    /api/users/export/csv    # Export to CSV
 ```
 
 ### Products
 ```
-GET    /api/products           # List products (paginated, searchable)
-GET    /api/products/{id}      # Get product by ID
-POST   /api/products           # Create product
-PUT    /api/products/{id}      # Update product
-DELETE /api/products/{id}      # Delete product
+GET    /api/products            # List products (paginated, searchable)
+GET    /api/products/{id}       # Get product by ID
+POST   /api/products            # Create product
+PUT    /api/products/{id}       # Update product
+DELETE /api/products/{id}       # Delete product
 GET    /api/products/export/csv # Export to CSV
 ```
 
 ## Database Schema
 
-### Users Table
+### Users
 ```sql
 CREATE TABLE users (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255),
     email VARCHAR(255) UNIQUE,
     phone VARCHAR(50),
@@ -155,53 +138,28 @@ CREATE TABLE users (
 );
 ```
 
-### Products Table
+### Products
 ```sql
 CREATE TABLE products (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     stock INT,
     description TEXT,
-    user_id BIGINT,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    user_id BIGINT REFERENCES users(id)
 );
 ```
 
-## What I Learned
+## Roadmap
 
-- Spring Boot application structure
-- JPA entities and relationships (@OneToMany, @ManyToOne)
-- Repository pattern with Spring Data JPA
-- REST API design
-- Request parameters (pagination, sorting, search)
-- Front-end integration with jQuery
-- Single Page Application (SPA) navigation
-- Bootstrap admin templates
-
-## Learning Journey
-
-This project was built as part of learning Java enterprise development, coming from a PHP/MySQL/JavaScript background. It demonstrates:
-- Backend API development
-- Database relationship modeling
-- Modern frontend patterns
-- Clean separation of concerns
-
-## Future Improvements
-
-- Add authentication (JWT)
-- Implement role-based access control
-- Add file upload for user avatars
-- Product images
-- Advanced filtering
-- Bulk operations
-- Email notifications
+- [ ] JWT Authentication
+- [ ] Role-based access control
+- [ ] User avatar upload
+- [ ] Product images
+- [ ] Bulk operations
+- [ ] Email notifications
 
 ## Author
 
 **Roman**
 - GitHub: [@romano74](https://github.com/romano74)
-
----
-
-**Example Project - Spring Boot & Hibernate** 
